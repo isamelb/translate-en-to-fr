@@ -14,5 +14,7 @@ def translate():
     translated_text = translator.translate(text, src='en', dest='fr').text
     return {'translated_text': translated_text}
 
-if __name__ == '__main__':
-    app.run(debug=True)
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+app.wsgi_app = ProxyFix(app.wsgi_app)
+

@@ -1,0 +1,29 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "app.py",
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "50mb"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "headers": { "Cache-Control": "s-maxage=31536000,immutable" },
+        "dest": "/static/$1"
+      },
+      {
+        "src": "/(favicon.ico)",
+        "headers": { "Cache-Control": "s-maxage=31536000,immutable" },
+        "dest": "/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "app.py"
+      }
+    ]
+  }
+  
