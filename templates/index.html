@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English to French Translator</title>
+</head>
+<body>
+    <h1>English to French Translator</h1>
+    <form id="translation-form">
+        <label for="text">Enter English text:</label><br>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+        <button type="submit">Translate</button>
+    </form>
+    <h2>Translated text:</h2>
+    <div id="translated-text"></div>
+    <script>
+        document.getElementById('translation-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const text = document.getElementById('text').value;
+            const response = await fetch('/translate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `text=${encodeURIComponent(text)}`,
+            });
+            const data = await response.json();
+            document.getElementById('translated-text').textContent = data.translated_text;
+        });
+    </script>
+</body>
+</html>
